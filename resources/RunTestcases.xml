@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite parallel="false" name="Suite">
-  <test name="Test">
+<suite parallel="false" name="nopCommerce">
+  <test name="Run Testcases">
     <classes>
-      <class name="com.nopCommerce.account.Account_Register"/>
+      <class name="com.nopCommerce.account.Use_BasePage_InnitClass"/>
+      <class name="com.nopCommerce.account.Use_BasePage_getClass"/>
+      <class name="com.nopCommerce.account.Use_BasePage_Extend"/>
     </classes>
-  </test> <!-- Test -->
-</suite> <!-- Suite -->
+  </test> 
+</suite> 
