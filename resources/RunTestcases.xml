@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite parallel="false" name="nopCommerce">
-  <test name="Run Testcases">
+	
+  <test name="Run Testcases on chrome">
+	<parameter name = "browser" value = "Chrome"/>
     <classes>
-      <class name="com.nopCommerce.account.Use_BasePage_InnitClass"/>
-      <class name="com.nopCommerce.account.Use_BasePage_getClass"/>
-      <class name="com.nopCommerce.account.Use_BasePage_Extend"/>
+      <class name="com.nopCommerce.account.Multiple_Browsers"/>   
     </classes>
   </test> 
+  
+  <!--<test name="Run Testcases on edge">
+	<parameter name = "browser" value = "edge"/>
+    <classes>
+      <class name="com.nopCommerce.account.Multiple_Browsers"/>   
+    </classes>
+  </test> -->
+  
 </suite> 
