@@ -2,7 +2,6 @@ package commons;
 
 import java.time.Duration;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,7 +11,7 @@ public class BaseTest {
 
 	private WebDriver driver;
 
-	protected WebDriver getBrowser(String browserName) {
+	protected WebDriver getBrowser(String browserName, String url) {
 		BrowserList browser = BrowserList.valueOf(browserName.toUpperCase());
 
 		switch (browser) {
@@ -28,7 +27,7 @@ public class BaseTest {
 
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
 		driver.manage().window().maximize();
-		driver.get("https://demo.nopcommerce.com/");
+		driver.get(url);
 		return driver;
 	}
 

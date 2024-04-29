@@ -3,6 +3,7 @@ package pageObjects;
 import org.openqa.selenium.WebDriver;
 
 import commons.BasePage;
+import commons.PageGeneratorManager;
 import pageUIs.RegisterPageUI;
 
 public class RegisterPageObject extends BasePage {
@@ -43,9 +44,10 @@ public class RegisterPageObject extends BasePage {
 		return getElementText(driver,  RegisterPageUI.CONFIRM_PASSWORD_ERROR_MSG);
 	}
 
-	public void clickToWebLogo() {
+	public HomePageObject clickToWebLogo() {
 		waitForElementToBeClickable(driver, RegisterPageUI.WEB_LOGO);
 		clickToElement(driver,RegisterPageUI.WEB_LOGO);
+		return PageGeneratorManager.openHomePage(driver);
 	}
 
 	public void SendKeysToFirstNameTextBox(String string) {
@@ -78,6 +80,11 @@ public class RegisterPageObject extends BasePage {
 	public String getRegisterResult() {
 		waitForElementVisible(driver, RegisterPageUI.REGISTER_SUCCESS_RESULT );
 		return getElementText(driver, RegisterPageUI.REGISTER_SUCCESS_RESULT);
+	}
+	
+	public LoginPageObject clickLogin() {
+		clickToElement(driver, RegisterPageUI.LOGIN_LINK);
+		return PageGeneratorManager.openLoginPage(driver);
 	}
 
 }

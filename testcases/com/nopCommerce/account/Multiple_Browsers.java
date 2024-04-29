@@ -1,7 +1,5 @@
 package com.nopCommerce.account;
 
-import java.util.Random;
-
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -10,6 +8,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import commons.BaseTest;
+import commons.PageGeneratorManager;
 import pageObjects.HomePageObject;
 import pageObjects.RegisterPageObject;
 
@@ -19,30 +18,28 @@ public class Multiple_Browsers extends BaseTest{
 	RegisterPageObject registerPage;
 	String emailSignIn = getRandomEmail();
 
-	@Parameters ("browser")
+	@Parameters ({"browser","url"})
 	@BeforeClass
-	public void beforeClass(String browserName) {
-		driver = getBrowser(browserName);
-		homePage = new HomePageObject(driver);
-
+	public void beforeClass(String browserName,String urlLink) {
+		driver = getBrowser(browserName,urlLink);
+		homePage = PageGeneratorManager.openHomePage(driver);
 	}
 
 	@Test
 	public void TC_01_Empty_Data() {
-		homePage.clickToRegisterLink();
-		registerPage = new RegisterPageObject(driver);
+		registerPage = homePage.clickToRegisterLink();
 		registerPage.clickToRegisterButton();
 		Assert.assertEquals(registerPage.getFirstNameError(), "First name is required.");
 		Assert.assertEquals(registerPage.getLastNameError(), "Last name is required.");
 		Assert.assertEquals(registerPage.getEmailError(), "Email is required.");
 		Assert.assertEquals(registerPage.getPasswordError(), "Password is required.");
 		Assert.assertEquals(registerPage.getConfirnPasswordError(), "Password is required.");
-		registerPage.clickToWebLogo();
+		homePage = registerPage.clickToWebLogo();
 	}
 
 	//@Test
 	public void TC_02_Invalid_Email() {
-		homePage.clickToRegisterLink();
+		registerPage = homePage.clickToRegisterLink();
 		registerPage = new RegisterPageObject(driver);
 		registerPage.SendKeysToFirstNameTextBox("Tran Dang");
 		registerPage.SendKeysToLastNameTextBox("Khoa");
@@ -50,12 +47,12 @@ public class Multiple_Browsers extends BaseTest{
 		registerPage.SendKeysToPasswordTextBox("123456");
 		registerPage.SendKeysToConfirnPasswordTextBox("123456");
 		registerPage.clickToRegisterButton();
-		registerPage.clickToWebLogo();
+		homePage = registerPage.clickToWebLogo();
 	}
 
 	@Test
 	public void TC_03_Invalid_Password() {
-		homePage.clickToRegisterLink();
+		registerPage = homePage.clickToRegisterLink();
 		registerPage = new RegisterPageObject(driver);
 		registerPage.SendKeysToFirstNameTextBox("Tran Dang");
 		registerPage.SendKeysToLastNameTextBox("Khoa");
@@ -66,12 +63,12 @@ public class Multiple_Browsers extends BaseTest{
 		Assert.assertEquals(registerPage.getPasswordError(),
 				"Password must meet the following rules:\nmust have at least 6 characters");
 
-		registerPage.clickToWebLogo();
+		homePage = registerPage.clickToWebLogo();
 	}
 
 	@Test
 	public void TC_04_Missmatch_Confirn_Password() {
-		homePage.clickToRegisterLink();
+		registerPage = homePage.clickToRegisterLink();
 		registerPage = new RegisterPageObject(driver);
 		registerPage.SendKeysToFirstNameTextBox("Tran Dang");
 		registerPage.SendKeysToLastNameTextBox("Khoa");
@@ -82,12 +79,12 @@ public class Multiple_Browsers extends BaseTest{
 
 		Assert.assertEquals(registerPage.getConfirnPasswordError(), "The password and confirmation password do not match.");
 
-		registerPage.clickToWebLogo();
+		homePage = registerPage.clickToWebLogo();
 	}
 
 	@Test
 	public void TC_05_Register_Success() {
-		homePage.clickToRegisterLink();
+		registerPage = homePage.clickToRegisterLink();
 		registerPage = new RegisterPageObject(driver);
 		registerPage.SendKeysToFirstNameTextBox("Tran Dang");
 		registerPage.SendKeysToLastNameTextBox("Khoa");
@@ -98,7 +95,7 @@ public class Multiple_Browsers extends BaseTest{
 
 		Assert.assertEquals(registerPage.getRegisterResult(), "Your registration completed");
 
-		registerPage.clickToWebLogo();
+		homePage = registerPage.clickToWebLogo();
 	}
 
 	@AfterClass(alwaysRun = true)

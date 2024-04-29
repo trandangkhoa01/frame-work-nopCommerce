@@ -4,14 +4,15 @@
   <test name="Run Testcases on chrome">
 	<parameter name = "browser" value = "Chrome"/>
     <classes>
-      <class name="com.nopCommerce.account.Multiple_Browsers"/>   
+      <class name="com.nopCommerce.account.DemoSwitchPageAndURL"/>   
     </classes>
   </test> 
   
-  <!--<test name="Run Testcases on edge">
+ <!--<test name="Run Testcases on edge">
 	<parameter name = "browser" value = "edge"/>
+	<parameter name = "url" value = "https://demo.nopcommerce.com/"/>
     <classes>
-      <class name="com.nopCommerce.account.Multiple_Browsers"/>   
+      <class name="com.nopCommerce.account.D"/>   
     </classes>
   </test> -->
   
