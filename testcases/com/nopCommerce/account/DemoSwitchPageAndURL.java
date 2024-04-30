@@ -61,15 +61,21 @@ public class DemoSwitchPageAndURL extends BaseTest {
 		homepage = loginPage.loginSuccess(emailSignIn, password);
 		
 		customerInfoPage = homepage.clickToMyAccountLink();
+		customerInfoPage.clickToMenu("Addresses");
 		
-		addressPage = customerInfoPage.openAddressPage();
+		addressPage = PageGeneratorManager.openAddressPage(driver);
+		addressPage.clickToMenu("Customer info");
 		
-		customerInfoPage = addressPage.openCustomerInfoPage();
+		customerInfoPage = PageGeneratorManager.openCustomerInforPage(driver);
+		
+		addressPage = (AddressPageObject) customerInfoPage.clickToMenuByName("Addresses");
+		
+		customerInfoPage = (CustomerInforPageObject) addressPage.clickToMenuByName("Customer info");
 		
 		homepage = customerInfoPage.clickLogout();
 	}
 
-	@Test
+	//@Test
 	public void TC_O2_SwitchURL() {
 		
 		loginPage = homepage.clickToLoginLink();

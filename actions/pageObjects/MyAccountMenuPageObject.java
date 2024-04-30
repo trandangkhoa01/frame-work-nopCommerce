@@ -13,14 +13,24 @@ public class MyAccountMenuPageObject extends BasePage {
 		this.driver = driver;
 	}
 	
-	public AddressPageObject openAddressPage() {
-		clickToElement(driver, MyAccountMenuPageUI.ADDRESS_LINK);
-		return PageGeneratorManager.openAddressPage(driver);
+	
+	public void  clickToMenu(String pageName) {
+		clickToElement(driver, MyAccountMenuPageUI.MENU_LEFT_PAGE_LINK, pageName);
 	}
 	
-	public CustomerInforPageObject openCustomerInfoPage() {
-		clickToElement(driver, MyAccountMenuPageUI.ADDRESS_LINK);
-		return PageGeneratorManager.openCustomerInforPage(driver);
+	public MyAccountMenuPageObject  clickToMenuByName(String pageName) {
+		clickToElement(driver, MyAccountMenuPageUI.MENU_LEFT_PAGE_LINK, pageName);
+		switch (pageName) {
+		case "Addresses": {
+			return PageGeneratorManager.openAddressPage(driver);
+		}
+		case "Customer info": {
+			return PageGeneratorManager.openCustomerInforPage(driver);
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + pageName);
+		}
+
 	}
 	
 }

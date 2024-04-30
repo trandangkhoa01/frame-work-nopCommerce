@@ -113,6 +113,11 @@ public class BasePage {
 		}
 	}
 
+	public String getDynamicLocator(String locator, String...RestParameter) {
+		return String.format(locator,(Object[]) RestParameter);
+	}
+	
+	
 	public By getByLocator(String locator) {
 		By by = null;
 		if(locator.startsWith("xpath=") || locator.startsWith("Xpath=") || locator.startsWith("XPath=") || locator.startsWith("XPATH=")) {
@@ -131,25 +136,44 @@ public class BasePage {
 			
 			return by;
 	}
-
+	
+	
 	public WebElement findElement(WebDriver driver, String locator) {
 		return driver.findElement(getByLocator(locator));
 	}
+	
 
 	public void clickToElement(WebDriver driver, String locator) {
 		waitForElementToBeClickable(driver, locator);
 		findElement(driver, locator).click();
 	}
-
+	
+	public void clickToElement(WebDriver driver, String locator, String...RestParameter) {
+		waitForElementToBeClickable(driver, getDynamicLocator(locator, RestParameter));
+		findElement(driver, getDynamicLocator(locator, RestParameter)).click();
+	}
+	
+	
+	
 	public void senKeysToElement(WebDriver driver, String locator, String valueToSend) {
 		waitForElementVisible(driver, locator);
 		findElement(driver, locator).clear();
 		findElement(driver, locator).sendKeys(valueToSend);
 	}
 
+	public void senKeysToElement(WebDriver driver, String locator, String valueToSend, String...RestParameter) {
+		waitForElementVisible(driver, getDynamicLocator(locator, RestParameter));
+		findElement(driver, getDynamicLocator(locator, RestParameter)).clear();
+		findElement(driver, getDynamicLocator(locator, RestParameter)).sendKeys(valueToSend);
+	}
+
 	public String getElementText(WebDriver driver, String locator) {
 		waitForElementVisible(driver, locator);
 		return findElement(driver, locator).getText();
+	}
+	public String getElementText(WebDriver driver, String locator, String RestParameter) {
+		waitForElementVisible(driver, getDynamicLocator(locator, RestParameter));
+		return findElement(driver, getDynamicLocator(locator, RestParameter)).getText();
 	}
 
 	public List<WebElement> getListElement(WebDriver driver, String locator) {
@@ -160,7 +184,11 @@ public class BasePage {
 	public void selectItemInDropdown(WebDriver driver, String locator, String expectedItem) {
 		new Select(findElement(driver, locator)).selectByVisibleText(expectedItem);
 	}
-
+	
+	public void selectItemInDropdown(WebDriver driver, String locator, String expectedItem,String RestParameter) {
+		new Select(findElement(driver, getDynamicLocator(locator, RestParameter))).selectByVisibleText(expectedItem);
+	}
+    
 	public String getFirstSelectedItem(WebDriver driver, String locator) {
 		return new Select(findElement(driver, locator)).getFirstSelectedOption().getText();
 	}
@@ -211,18 +239,30 @@ public class BasePage {
 			findElement(driver, locator).click();
 		}
 	}
+	
+	public void checkToElment(WebDriver driver, String locator,String RestParameter) {
+		if (!isElementSelected(driver, getDynamicLocator(locator, RestParameter))) {
+			findElement(driver, getDynamicLocator(locator, RestParameter)).click();
+		}
+	}
 
 	/**
 	 * unCheckToElement only use for Checkbox
 	 * 
 	 * @param locator
 	 */
+	public void unCheckToElment(WebDriver driver, String locator,String RestParameter) {
+		if (findElement(driver, getDynamicLocator(locator, RestParameter)).isSelected()) {
+			findElement(driver, getDynamicLocator(locator, RestParameter)).click();
+		}
+	}
+	
 	public void unCheckToElment(WebDriver driver, String locator) {
 		if (findElement(driver, locator).isSelected()) {
 			findElement(driver, locator).click();
 		}
 	}
-
+	
 	public Boolean isElementDisplay(WebDriver driver, String locator) {
 		return findElement(driver, locator).isDisplayed();
 	}
@@ -233,6 +273,10 @@ public class BasePage {
 
 	public Boolean isElementSelected(WebDriver driver, String locator) {
 		return findElement(driver, locator).isSelected();
+	}
+	
+	public Boolean isElementSelected(WebDriver driver, String locator,String RestParameter) {
+		return findElement(driver, getDynamicLocator(locator, RestParameter)).isSelected();
 	}
 
 	public void switchToIFrame(WebDriver driver, String locator) {
@@ -246,7 +290,11 @@ public class BasePage {
 	public void hoverToElement(WebDriver driver, String locator) {
 		new Actions(driver).moveToElement(findElement(driver, locator)).perform();
 	}
-
+	
+	public void hoverToElement(WebDriver driver, String locator,String RestParameter) {
+		new Actions(driver).moveToElement(findElement(driver, getDynamicLocator(locator, RestParameter))).perform();
+	}
+	
 	public void doubleClickToElement(WebDriver driver, String locator) {
 		new Actions(driver).doubleClick(findElement(driver, locator)).perform();
 	}
